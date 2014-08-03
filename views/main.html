@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>SnowShoe Demo - {{ stamp.serial }}</title>
+</head>
+<style>
+#page-content {
+	margin: 0px auto;
+	text-align: center;
+	padding: 1em;
+	border: 1px dashed #333;
+	background-color: #eee;
+  font-size: 200%;
+}
+#image-container {
+  padding-top: 1em;
+}
+</style>
+<body>
+
+<div id="page-content">
+
+<!-- info block ; updated by javascript periodically -->
+<div id="info">{{ stamp.serial }} - page loading ...</div>
+
+<!-- simple nav choices: upload an image or try a new stamp -->
+<input id="photo" style="display:none" type="file" accept="image/*"
+capture="camera"><a href="#" id="input-click">camera upload</a></input>
+<span id="nav-sep"> | </span>
+<a id="stamp-page-link" href="http://beta.snowshoestamp.com/applications/client/{{app_key}}/">try another stamp</a> 
+
+<!-- the image associated with this stamp, if we have one -->
+<div id="image-container"><img id="image" src="" width="100%" /></div>
+
+</div>
+
+
+<!-- in-page javascript. you know, it's sample code ... -->
+
+<script>
+var stmp = '{{stamp.serial}}'
+var info = document.getElementById ("info");
+
+// first, handle the case where we don't have a stamp to do anything
+// with. (maybe we came here for the first time from a link to '/'
+if (! stmp) {
+  document.getElementById('input-click').style.display = 'none';
+  document.getElementById('nav-sep').style.display = 'none';
+  document.getElementById('stamp-page-link').innerHTML =
+    "click here to try a stamp";
+}
+
+showImage ();
+
+info.innerHTML = stmp;
+
+var inp = document.getElementById('photo');
+document.getElementById('input-click').addEventListener
+  ("click", function (e) { inp.click(); });
+
+inp.onchange = function () {
+  var img = inp.files[0];
+  info.innerHTML = "new picture of type " + img.type;
+
+  if (!img) { return; }
+  var reader = new FileReader ();
+
+  reader.onload = function (e) {
+    var bytes = new Uint8Array(e.target.result);
+    var xhr = new XMLHttpRequest ();
+    info.innerHTML = "uploading image";
+
+    xhr.onreadystatechange = function () {
+      if (xhr.status == 0) { return; }
+      if (xhr.status == 200) {
+        xhr.onreadystatechange = null;
+        showImage ();
+        info.innerHTML = stmp + " - image upload finished";
+      } else {
+        info.innerHTML = "image upload failed";
+      }
+    };
+
+    xhr.open ("POST", "/image?type=" + img.type + "&serial=" + stmp);
+    console.log ("uploading", bytes.length);
+    xhr.send (bytes);
+  }
+  reader.readAsArrayBuffer (img);
+}
+
+function showImage () {
+  var image = document.getElementById ("image");
+  var src = "/image?serial=" + stmp + "&nocache=" + new Date().getTime();
+  image.style.visibility = "hidden";
+  image.onload = function () { image.style.visibility = "visible"; };
+  image.onerror =
+    function () { info.innerHTML = stmp + " - no image uploaded yet"; }
+  image.src = src;
+  console.log ("requested image update", src);
+}
+
+</script>
+
+</body>
+</html>
