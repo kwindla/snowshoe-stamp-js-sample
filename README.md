@@ -78,3 +78,6 @@ git clone https://github.com/kwindla/snowshoe-stamp-js-sample.git
 cd snowshoe-stamp-js-sample/
 npm install
 ```
+
+Remember to make sure that this machine instance's security group allows traffic into whatever port your node.js server is listening on. And also make sure that your SnowShoe application callback points to the public IP address (or DNS name) of the server.
+
