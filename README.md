@@ -64,3 +64,17 @@ This demo displays photos that have been associated with a particular stamp. You
 
 The [stamp-image-demo.js](https://github.com/kwindla/snowshoe-stamp-js-sample/blob/master/stamp-image-demo.js) server-side logic shows one way to pass stamp validation information into html templates. Check the comments for more details. And, to complete the picture, [views/main.html](https://github.com/kwindla/snowshoe-stamp-js-sample/blob/master/views/main.html) makes use of the stamp validation data from both (templated) HTML and JavaScript.
 
+setting up on Amazon AWS EC2
+----
+
+The following commands should get you up and running on a brand new Amazon Linux machine. (This was tested on `amzn-ami-hvm-2014.03.2.x86_64-ebs (ami-d13845e1)`.)
+
+```bash
+sudo rpm --import https://fedoraproject.org/static/0608B895.txt
+sudo rpm -Uvh http://download-i2.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+sudo yum install nodejs npm --enablerepo=epel
+sudo yum install git
+git clone https://github.com/kwindla/snowshoe-stamp-js-sample.git
+cd snowshoe-stamp-js-sample/
+npm install
+```
