@@ -1,7 +1,7 @@
 snowshoe-stamp-js-sample
 ========================
 
-So you have a few SnowShoe stamps and you want to write a node.js application that makes use of them. Cool! This is sample code to get you started.
+So you have some SnowShoe stamps and you want to write a node.js application that makes use of them. Cool! This is sample code to get you started.
 
 the basics
 ----------
@@ -21,7 +21,7 @@ Now point a phone or tablet browser at the server you just spun up.
 minimal working server-side code
 ---------------------
 
-We're relying on the [snowshoestamp](https://github.com/mattnull/node-snowshoe-stamp) package to do the heavy lifting of validating the callback data we get from the SnowShoe API server. So all we need to do is set up some routing and validation logic.
+We're relying on the [snowshoestamp](https://github.com/mattnull/node-snowshoe-stamp) package to do the heavy lifting of communicating with the SnowShoe API server. All we need to do is set up some routing and validation logic.
 
 ```javascript
 var express = require('express');
@@ -67,7 +67,7 @@ The [stamp-image-demo.js](https://github.com/kwindla/snowshoe-stamp-js-sample/bl
 setting up on Amazon AWS EC2
 ----
 
-The following commands should get you up and running on a brand new Amazon Linux machine. (This was tested on `amzn-ami-hvm-2014.03.2.x86_64-ebs (ami-d13845e1)`.)
+The following commands should get you up and running on a clean Amazon Linux virtual machine instance. (This was tested on `amzn-ami-hvm-2014.03.2.x86_64-ebs (ami-d13845e1)`.)
 
 ```bash
 sudo rpm --import https://fedoraproject.org/static/0608B895.txt
