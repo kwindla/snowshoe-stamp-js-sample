@@ -23,7 +23,7 @@ var auth = new snowshoe (app_info.app_key, app_info.app_secret);
 
 app.get ('/', function (request, response) {
   response.send ('<a href="http://beta.snowshoestamp.com/applications/client/' +
-                 'adacd294fb22e9504239' + 
+                 app_info.app_key + 
                  '/">click here to try a stamp</a>');
 });
 
